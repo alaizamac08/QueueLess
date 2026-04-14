@@ -59,24 +59,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin/Staff Register Page</title>
+    <link rel="stylesheet" href="../assets/css/cherry.css">
 </head>
 <body><center>
 
+    <div class="main">
+        <div class="register">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+                <h1>Register</h1>
+                
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br><br>
 
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-        <h2>Register</h2>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br><br>
 
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
+                <button>
+                    <input type="submit" value="Register">
+                </button>
+            </form>
+        </div>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+        <div class="user_login">
+            Already have an account? 
+            <a href="Admin_Staff_LogIn.php">Login</a>
+        </div>
 
-        <input type="submit" value="Register">
-    </form>
 
-    <br>Already have an account? 
-    <a href="Admin_Staff_LogIn.php">Login</a>
+        <footer>
+            <p> Copyright &copy; 2024 Queueless Enrollment Website. All rights reserved. </p>
+        </footer>
+    </div>
+
     </center>
 </body>
 </html>

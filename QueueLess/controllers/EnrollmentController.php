@@ -4,6 +4,7 @@
     private $newStudent;
     private $transferStudent;
     private $requirementChecker;
+    private $table_name = "activiy_logging";
 
     public function __construct($db){
         $this->enrollment = new Enrollment($db);
@@ -52,8 +53,28 @@
         return $status;
     }
 
-    public function updateEnrollmentStatus($enrollment_id, $status){
-        return $this->enrollment->updateStatus($enrollment_id, $status);
+    public function updateEnrollmentStatus($enrollment_id, $status, $user_id){
+        global $conn;
+
+        $stmt = $conn->prepare("UPDATE enrollments SET status=?, processed_by=? WHERE enrollment_id=?");
+        $stmt->bind_param("sii", $status, $user_id, $enrollment_id);
+        $stmt->execute();
+
+        $action = "Enrollment Status Update";
+        $description = $status . " enrollment ID: " . $enrollment_id;
+
+        $log = $conn->prepare("INSERT INTO " . $this->table_name . "(
+        user_id, 
+        action, 
+        description
+        ) VALUES (?, ?, ?)");
+        $log->bind_param("iss", 
+        $user_id, 
+        $action, 
+        $description);
+        $log->execute();
+
+        return true;
     }
 
     public function getStudentEnrollments($student_id){

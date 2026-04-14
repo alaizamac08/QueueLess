@@ -61,24 +61,37 @@ if ($result->num_rows === 1){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin/Staff Login Page</title>
+    <link rel="stylesheet" href="../assets/css/cherry.css">
 </head>
 <body>
     <center>
-        <form action="<?php  echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
-        
-        <h2>Login</h2>
-        <label for="username">Username:</label><br>
-        <input type="text" name="username" required><br><br>
 
-        <label for="password">Password:</label><br>
-        <input type="password" name="password" required><br><br>
-        <input type="submit" value="Login">
-        </form>
+        <div class="main">
+            <div class="login">
+                <form action="<?php  echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+                
+                    <h1>Login</h1>
 
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" required><br><br>
 
-        <br>Don't have an account?
-        <a href="Admin_Staff_Register.php">Register</a>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" required><br><br>
+                    <button>
+                        <input type="submit" value="Login">
+                    </button>
+                </form>
+            </div>
 
+            <div class="user_register">
+                Don't have an account?
+                <a href="Admin_Staff_Register.php">Register</a>
+            </div>
+
+            <footer>
+                <p> Copyright &copy; 2024 Queueless Enrollment Website. All rights reserved. </p>
+            </footer>
+        </div>
     </center>
 </body>
 </html>

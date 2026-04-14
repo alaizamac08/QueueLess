@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: 1px solid red;
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main{
+    max-width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 100%, rgba(0, 0, 0, 0.5) 100%), url(../../assets/images/zy.jpg);
+    background-position: center;
+    background-size: cover;
+    flex: 1;
+    padding: 30px 50px 0 50px;
+}
+
+.form h1{
+    padding: 20px 0 45px 0;
+}
+
+.login{
+    padding: 20px 0 326px 0;
+}
+
+.footer{
+    background: linear-gradient(rgb(103, 136, 89), rgb(69, 92, 60));
+    color: rgb(0, 0, 0);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 100%;
+}
