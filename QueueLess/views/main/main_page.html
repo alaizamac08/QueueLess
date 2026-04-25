@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Queueless Enrollment Website</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../assets/css/cherry.css">
+    </head>
+    <body>
+        <div class="main">
+
+            <!-- NAVBAR -->
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="../main/main_page.html">
+                    <img src="../../assets/images/queueless.png" alt="Queueless Logo">
+                    </a>
+                </div>
+
+                <!-- NAV TOGGLE -->
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+
+                <div class="nav-links">
+                    <ul class="menu">
+                        <li><a href="main_page.html">HOME</a></li>
+                        <li><a href="about.html">ABOUT</a></li>
+
+                        <li class="has-submenu">
+                            <!-- SUBMENU TOGGLE -->
+                            <input type="checkbox" id="admission-toggle" class="submenu-toggle">
+                            <label for="admission-toggle" class="submenu-label">
+                                ADMISSION
+                            </label>
+
+                            <ul class="submenu">
+                                <li><a href="admission.html#requirements">Admission Requirements</a></li>
+                                <li><a href="admission.html#application">Online Application</a></li>
+                                <li><div class="submenu-divider"></div></li>
+                                <li><a href="../../public/Admin_Staff_LogIn.php">Login</a></li>
+                            </ul>
+                        </li>
+
+                        <li><a href="contact.html">CONTACT</a></li>
+                    </ul>
+
+                    <div class="search">
+                        <input class="srch" type="search" placeholder="Search">
+                        <button class="btn">Search</button>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- HERO CONTENT -->
+            <div class="content">
+                <h1>Welcome to Talipapa High School Website</h1>
+                <p class="par">We are here to help you with your enrollment process.</p>
+                <p class="pp">So what are you waiting for? Stop waiting and be a Talipapanians!</p>
+                <button class="btn_apply">
+                    <a class="apply" href="admission.html">
+                        <h1>APPLY NOW!</h1>
+                    </a>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>Copyright &copy; 2024 Queueless Enrollment Website. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </body>
+</html>
