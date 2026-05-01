@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Enrollment</title>
+<link rel="stylesheet" href="../../public/assets/css/cherry.css">
+</head>
+
+<body class="enrollment-page">
+
+<div class="form-wrapper">
+    <button class="back-btn" onclick="history.back()">← Back</button>
+
+    <form action="../../app/core/submit_enrollment.php" method="POST" enctype="multipart/form-data" class="form-card">
+
+        <h1>Online Enrollment</h1>
+
+        <!-- STUDENT -->
+        <div class="form-section">
+            <h2>Student Information</h2>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>LRN<span class="asterisk">*</span></label>
+                    <input type="number" name="lrn" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Sex<span class="asterisk">*</span></label>
+                    <select name="sex" required>
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>First Name<span class="asterisk">*</span></label>
+                    <input type="text" name="first_name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Middle Name<span class="asterisk">*</span></label>
+                    <input type="text" name="middle_name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Last Name<span class="asterisk">*</span></label>
+                    <input type="text" name="last_name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Suffix</label>
+                    <input type="text" name="suffix">
+                </div>
+
+                <div class="input-group">
+                    <label>Age<span class="asterisk">*</span></label>
+                    <input type="number" name="age" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Birth Date<span class="asterisk">*</span></label>
+                    <input type="date" name="birth_date" required>
+                </div>
+
+                <div class="input-group full">
+                    <label>Place of Birth<span class="asterisk">*</span></label>
+                    <input type="text" name="place_of_birth" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Nationality<span class="asterisk">*</span></label>
+                    <input type="text" name="nationality" required>
+                </div>
+
+                <div class="input-group full">
+                    <label>Address<span class="asterisk">*</span></label>
+                    <input type="text" name="address" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Phone</label>
+                    <input type="text" name="phone_number">
+                </div>
+
+                <div class="input-group">
+                    <label>Email<span class="asterisk">*</span></label>
+                    <input type="email" name="email" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- GUARDIAN -->
+        <div class="form-section">
+            <h2>Guardian Information</h2>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>First Name<span class="asterisk">*</span></label>
+                    <input type="text" name="g_first_name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Last Name<span class="asterisk">*</span></label>
+                    <input type="text" name="g_last_name" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Relationship<span class="asterisk">*</span></label>
+                    <input type="text" name="relationship" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Occupation</label>
+                    <input type="text" name="occupation">
+                </div>
+
+                <div class="input-group full">
+                    <label>Contact Number<span class="asterisk">*</span></label>
+                    <input type="text" name="contact_number" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENROLLMENT -->
+        <div class="form-section">
+            <h2>Enrollment Details</h2>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>School Year<span class="asterisk">*</span></label>
+                    <input type="text" name="school_year" placeholder="2026-2027" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Grade Level<span class="asterisk">*</span></label>
+                    <input type="text" name="grade_level" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Section</label>
+                    <input type="text" name="section">
+                </div>
+
+                <div class="input-group">
+                    <label>Enrollment Type</label>
+                    <select name="enrollment_type" id="enrollment_type" required>
+                        <option value="">Select</option>
+                        <option value="new">New</option>
+                        <option value="old">Old</option>
+                        <option value="transfer">Transfer</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW -->
+        <div id="new_student_section" class="form-section hidden">
+            <h2>New Student</h2>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Previous School</label>
+                    <input type="text" name="previous_school">
+                </div>
+
+                <div class="input-group">
+                    <label>Kinder Completed</label>
+                    <select name="kindergarten_completed">
+                        <option value="">Select</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRANSFER -->
+        <div id="transfer_section" class="form-section hidden">
+            <h2>Transfer Details</h2>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Previous School</label>
+                    <input type="text" name="previous_school_name">
+                </div>
+
+                <div class="input-group">
+                    <label>School Address</label>
+                    <input type="text" name="school_address">
+                </div>
+
+                <div class="input-group">
+                    <label>Last Grade</label>
+                    <input type="text" name="last_grade_completed">
+                </div>
+
+                <div class="input-group">
+                    <label>General Average</label>
+                    <input type="number" name="general_average">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Required Documents</h2>
+
+            <div class="grid-2">
+
+                <div class="input-group file-group">
+                    <label>Birth Certificate<span class="asterisk">*</span></label>
+                    <div class="file-box">
+                        <label class="file-btn">
+                            Choose File
+                            <input type="file" name="birth_certificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </label>
+
+                        <span class="file-name">No file chosen</span>
+                    </div>
+                </div>
+
+                <div class="input-group file-group">
+                    <label>Report Card (form 137/138)<span class="asterisk">*</span></label>
+                    <div class="file-box">
+                        <label class="file-btn">
+                            Choose File
+                            <input type="file" name="birth_certificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </label>
+
+                        <span class="file-name">No file chosen</span>
+                    </div>
+                </div>
+
+                <div class="input-group file-group">
+                    <label>Good Moral Certificate</label>
+                    <div class="file-box">
+                        <label class="file-btn">
+                            Choose File
+                            <input type="file" name="birth_certificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                        </label>
+
+                        <span class="file-name">No file chosen</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Enrollment</button>
+
+    </form>
+
+</div>
+
+<script>
+const typeSelect = document.getElementById("enrollment_type");
+const newSection = document.getElementById("new_student_section");
+const transferSection = document.getElementById("transfer_section");
+
+typeSelect.addEventListener("change", () => {
+    newSection.classList.toggle("hidden", typeSelect.value !== "new");
+    transferSection.classList.toggle("hidden", typeSelect.value !== "transfer");
+});
+
+document.querySelectorAll('input[type="file"]').forEach(input => {
+    input.addEventListener('change', function () {
+        const fileName = this.files[0] ? this.files[0].name : "No file chosen";
+        this.closest('.file-box').querySelector('.file-name').textContent = fileName;
+    });
+});
+</script>
+
+</body>
+</html>

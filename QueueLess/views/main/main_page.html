@@ -3,7 +3,8 @@
     <head>
         <title>Queueless Enrollment Website</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../../assets/css/cherry.css">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="../../public/assets/css/cherry.css">
     </head>
     <body>
         <div class="main">
@@ -11,8 +12,8 @@
             <!-- NAVBAR -->
             <nav class="navbar">
                 <div class="logo">
-                    <a href="../main/main_page.html">
-                    <img src="../../assets/images/queueless.png" alt="Queueless Logo">
+                    <a href="main_page.html">
+                    <img src="../../public/assets/images/queueless.png" alt="Queueless Logo">
                     </a>
                 </div>
 
@@ -31,14 +32,16 @@
 
                         <li class="has-submenu">
                             <!-- SUBMENU TOGGLE -->
+                            <div class="submenu-label">
+                                <span class="admission-text">ADMISSION</span>
+                                <label for="admission-toggle" class="dropdown-icon">▼</label>
+                            </div>
+
                             <input type="checkbox" id="admission-toggle" class="submenu-toggle">
-                            <label for="admission-toggle" class="submenu-label">
-                                ADMISSION
-                            </label>
 
                             <ul class="submenu">
-                                <li><a href="admission.html#requirements">Admission Requirements</a></li>
-                                <li><a href="admission.html#application">Online Application</a></li>
+                                <li><a href="requirements.html">Admission Requirements</a></li>
+                                <li><a href="application.html">Online Application</a></li>
                                 <li><div class="submenu-divider"></div></li>
                                 <li><a href="../../public/Admin_Staff_LogIn.php">Login</a></li>
                             </ul>
@@ -46,11 +49,6 @@
 
                         <li><a href="contact.html">CONTACT</a></li>
                     </ul>
-
-                    <div class="search">
-                        <input class="srch" type="search" placeholder="Search">
-                        <button class="btn">Search</button>
-                    </div>
                 </div>
             </nav>
 
@@ -59,9 +57,9 @@
                 <h1>Welcome to Talipapa High School Website</h1>
                 <p class="par">We are here to help you with your enrollment process.</p>
                 <p class="pp">So what are you waiting for? Stop waiting and be a Talipapanians!</p>
-                <button class="btn_apply">
+                <button class="btn-apply">
                     <a class="apply" href="admission.html">
-                        <h1>APPLY NOW!</h1>
+                        APPLY NOW!
                     </a>
                 </button>
             </div>
@@ -70,9 +68,34 @@
 
         <!-- FOOTER -->
         <footer class="footer">
-            <div class="footer-content">
-                <p>Copyright &copy; 2024 Queueless Enrollment Website. All rights reserved.</p>
-            </div>
+                <div class="footer-container">
+
+                    <div class="footer-section">
+                        <h3>Queueless</h3>
+                        <p>Making enrollment faster, smarter, and queue-free for students.</p>
+                    </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="index.html">HOME</a></li>
+                            <li><a href="about.html">ABOUT</a></li>
+                            <li><a href="admission.html">ADMISSION</a></li>
+                            <li><a href="contact.html">CONTACT</a></li>
+                        </ul>
+                </div>
+
+                    <div class="footer-section">
+                        <h3>Contact</h3>
+                            <p>Email: talipapahighschool8@gmail.com</p>
+                            <p>Phone: +63 960 318 0014</p>
+                    </div>
+
+                </div>
+
+                <div class="footer-bottom">
+                    <p>© 2026 Queueless Enrollment System | All Rights Reserved</p>
+                </div>
         </footer>
 
     </body>
