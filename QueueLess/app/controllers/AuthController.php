@@ -42,8 +42,10 @@ class AuthController
 
         if ($user['role_id'] == 1) {
             header("Location: /admin/dashboard");
-        } else {
+        } elseif ($user['role_id'] == 2) {
             header("Location: /staff/dashboard");
+        } elseif ($user['role_id'] == 3) {
+            header("Location: /student/dashboard");
         }
         exit();
     }

@@ -9,6 +9,8 @@ class Auth {
                 return 'admin';
             case 2:
                 return 'staff';
+            case 3:
+                return 'student';
             default:
                 return null;
         }

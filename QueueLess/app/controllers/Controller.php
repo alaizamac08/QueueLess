@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../core/database.php';
+
 class Controller {
 
     protected function view(string $path, array $data = []) {

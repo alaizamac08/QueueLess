@@ -2,45 +2,79 @@
 session_start();
 
 require_once __DIR__ . '/../../app/controllers/UserController.php';
+require_once __DIR__ . '/../../app/controllers/StaffController.php';
+require_once __DIR__ . '/../../app/core/database.php';
+
+$db = (new Database())->connect();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'staff') {
-    header("Location: Admin_Staff_LogIn.php");
+    header("Location: Admin_Staff_Login.php");
     exit();
 }
 
-$userController = new UserController();
+$userController = new UserController($db);
+$staffController = new StaffController($db);
 
 $user_id = $_SESSION['user_id'];
-$user = $userController->getUser($user_id);
 
-// assume logs come from controller
+$user = $userController->getUser($user_id);
 $logs = $userController->getUserLogs($user_id);
+
+$staff = $staffController->getStaffByUserId($user_id);
+$staffExists = $staff !== null;
+
+// SAFE DEFAULT VALUES (prevents null errors)
+$staff = $staff ?? [
+    'first_name' => '',
+    'middle_name' => '',
+    'last_name' => '',
+    'position' => '',
+    'contact_number' => '',
+    'email' => ''
+];
+
+$error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $username = $_POST['username'];
-    $current_password = $_POST['current_password'];
-    $new_password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
+    // ACCOUNT UPDATE
+    if (isset($_POST['update_account'])) {
 
-    // fetch fresh user (important for validation)
-    $user = $userController->getUser($user_id);
+        $username = $_POST['username'];
+        $current_password = $_POST['current_password'];
+        $new_password = $_POST['new_password'];
+        $confirm_password = $_POST['confirm_password'];
 
-    // verify current password
-    if (!password_verify($current_password, $user['password'])) {
-        die("Current password is incorrect.");
+        $user = $userController->getUser($user_id);
+
+        if (!password_verify($current_password, $user['password'])) {
+            $error = "Current password is incorrect.";
+        } elseif ($new_password !== $confirm_password) {
+            $error = "Passwords do not match.";
+        } else {
+            $userController->updateUser($user_id, $username, $new_password);
+            header("Location: profile.php");
+            exit();
+        }
     }
 
-    // confirm match
-    if ($new_password !== $confirm_password) {
-        die("New passwords do not match.");
+    // STAFF PROFILE SAVE (CREATE OR UPDATE)
+    if (isset($_POST['update_profile'])) {
+
+        $staffData = [
+            'first_name' => $_POST['first_name'],
+            'middle_name' => $_POST['middle_name'],
+            'last_name' => $_POST['last_name'],
+            'position' => $_POST['position'],
+            'contact_number' => $_POST['contact_number'],
+            'email' => $_POST['email']
+        ];
+
+        $staffController->saveStaff($user_id, $staffData);
+
+        header("Location: profile.php");
+        exit();
     }
-
-    // update
-    $userController->updateUser($user_id, $username, $new_password);
-
-    header("Location: profile.php");
-    exit();
 }
 ?>
 
@@ -76,11 +110,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Profile Card -->
                 <div class="card">
-                    <h3>Account Security</h3>
+
+                <h2>Staff Information</h2>
+
+                <form method="POST" class="account-form">
+
+                    <div class="user-account">
+                        <label>First Name</label>
+                        <input type="text" name="first_name" value="<?= $staff['first_name'] ?>">
+                    </div>
+
+                    <div class="user-account">
+                        <label>Middle Name</label>
+                        <input type="text" name="middle_name" value="<?= $staff['middle_name'] ?>">
+                    </div>
+
+                    <div class="user-account">
+                        <label>Last Name</label>
+                        <input type="text" name="last_name" value="<?= $staff['last_name'] ?>">
+                    </div>
+
+                    <div class="user-account">
+                        <label>Position</label>
+                        <input type="text" name="position" value="<?= $staff['position'] ?>">
+                    </div>
+
+                    <div class="user-account">
+                        <label>Contact Number</label>
+                        <input type="text" name="contact_number" value="<?= $staff['contact_number'] ?>">
+                    </div>
+
+                    <div class="user-account">
+                        <label>Email</label>
+                        <input type="email" name="email" value="<?= $staff['email'] ?>">
+                    </div>
+
+                    <button type="submit" name="update_profile">
+                        <?= $staffExists ? "Update Profile" : "Create Profile" ?>
+                    </button>
+
+                </form>
 
 
-                    <?php if (isset($error)): ?>
-                        <div class="error-box"><?= $error = "Current password is incorrect." ?></div>
+                    <h2>Account Security</h2>
+
+
+                    <?php if ($error): ?>
+                        <div class="error-box"><?= $error ?></div>
                     <?php endif; ?>
 
                     <form method="POST" class="account-form">
@@ -105,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="password" name="confirm_password" required>
                         </div>
 
-                        <button type="submit">Update Security</button>
+                        <button type="submit" name="update_account">Update Security</button>
                     </form>
 
                 </div>

@@ -1,102 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Queueless Enrollment Website</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="../../public/assets/css/cherry.css">
-    </head>
-    <body>
-        <div class="main">
+<head>
+    <title>Talipapa High School Enrollment Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../public/assets/css/cherry.css">
+</head>
 
-            <!-- NAVBAR -->
-            <nav class="navbar">
-                <div class="logo">
-                    <a href="main_page.html">
-                    <img src="../../public/assets/images/queueless.png" alt="Queueless Logo">
-                    </a>
-                </div>
+<body>
 
-                <!-- NAV TOGGLE -->
-                <input type="checkbox" id="nav-toggle" class="nav-toggle">
-                <label for="nav-toggle" class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </label>
+<!-- MAIN HERO -->
+<div class="main">
 
-                <div class="nav-links">
-                    <ul class="menu">
-                        <li><a href="main_page.html">HOME</a></li>
-                        <li><a href="about.html">ABOUT</a></li>
-
-                        <li class="has-submenu">
-                            <!-- SUBMENU TOGGLE -->
-                            <div class="submenu-label">
-                                <span class="admission-text">ADMISSION</span>
-                                <label for="admission-toggle" class="dropdown-icon">▼</label>
-                            </div>
-
-                            <input type="checkbox" id="admission-toggle" class="submenu-toggle">
-
-                            <ul class="submenu">
-                                <li><a href="requirements.html">Admission Requirements</a></li>
-                                <li><a href="application.html">Online Application</a></li>
-                                <li><div class="submenu-divider"></div></li>
-                                <li><a href="../../public/Admin_Staff_LogIn.php">Login</a></li>
-                            </ul>
-                        </li>
-
-                        <li><a href="contact.html">CONTACT</a></li>
-                    </ul>
-                </div>
-            </nav>
-
-            <!-- HERO CONTENT -->
-            <div class="content">
-                <h1>Welcome to Talipapa High School Website</h1>
-                <p class="par">We are here to help you with your enrollment process.</p>
-                <p class="pp">So what are you waiting for? Stop waiting and be a Talipapanians!</p>
-                <button class="btn-apply">
-                    <a class="apply" href="admission.html">
-                        APPLY NOW!
-                    </a>
-                </button>
-            </div>
-
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="main_page.html">
+                <img src="../../public/assets/images/talipapa_high_school.png">
+            </a>
         </div>
 
-        <!-- FOOTER -->
-        <footer class="footer">
-                <div class="footer-container">
+        <input type="checkbox" id="nav-toggle" class="nav-toggle">
+        <label for="nav-toggle" class="hamburger">
+            <span></span><span></span><span></span>
+        </label>
 
-                    <div class="footer-section">
-                        <h3>Queueless</h3>
-                        <p>Making enrollment faster, smarter, and queue-free for students.</p>
+        <div class="nav-links">
+            <ul class="menu">
+                <li><a href="main_page.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+
+                <li class="has-submenu">
+                    <div class="submenu-label">
+                        <span>ADMISSION</span>
+                        <label for="admission-toggle" class="dropdown-icon">▼</label>
                     </div>
 
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="index.html">HOME</a></li>
-                            <li><a href="about.html">ABOUT</a></li>
-                            <li><a href="admission.html">ADMISSION</a></li>
-                            <li><a href="contact.html">CONTACT</a></li>
-                        </ul>
-                </div>
+                    <input type="checkbox" id="admission-toggle" class="submenu-toggle">
 
-                    <div class="footer-section">
-                        <h3>Contact</h3>
-                            <p>Email: talipapahighschool8@gmail.com</p>
-                            <p>Phone: +63 960 318 0014</p>
-                    </div>
+                    <ul class="submenu">
+                        <li><a href="requirements.html">Requirements</a></li>
+                        <li><a href="application.html">Apply Online</a></li>
+                        <li><div class="submenu-divider"></div></li>
+                        <li><a href="../student/login.php">Login</a></li>
+                    </ul>
+                </li>
 
-                </div>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
 
-                <div class="footer-bottom">
-                    <p>© 2026 Queueless Enrollment System | All Rights Reserved</p>
-                </div>
-        </footer>
+    <!-- HERO SECTION -->
+    <section class="content">
+        <h1>Talipapa High School</h1>
+        <p class="par">
+            A faster and smarter way to enroll. No long lines. No wasted time.
+        </p>
 
-    </body>
+        <p class="pp">
+            Start your journey with us today.
+        </p>
+
+        <button class="btn-apply">
+            <a href="admission.html">Apply Now</a>
+        </button>
+    </section>
+
+
+
+<!-- NEW SECTION (this is what you were missing) -->
+<section class="responsive">
+
+    <div class="aly">
+
+        <div class="section">
+            <h1>Fast Enrollment</h1>
+            <p>
+                Submit your application online and skip the queue.
+            </p>
+        </div>
+
+        <div class="section">
+            <h1>Secure System</h1>
+            <p>
+                Your data is protected with authentication and validation.
+            </p>
+        </div>
+
+        <div class="section">
+            <h1>Student Friendly</h1>
+            <p>
+                Simple interface designed for students and parents.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- OPTIONAL SECOND SECTION -->
+<section class="responsive">
+
+    <div class="zy">
+        <h1 style="text-align:center;">Why Choose Us?</h1>
+        <p style="text-align:center; max-width:800px; margin:auto;">
+            Talipapa High School provides a modern enrollment experience designed
+            to reduce stress and improve efficiency. Everything is built to help
+            students focus on what actually matters — learning.
+        </p>
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-section">
+            <h3>Talipapa High School</h3>
+            <p>Making enrollment faster, smarter, and queue-free.</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="main_page.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="admission.html">ADMISSION</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p>Email: talipapahighschool8@gmail.com</p>
+            <p>Phone: +63 960 318 0014</p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Talipapa High School Enrollment System</p>
+    </div>
+
+</footer>
+</div>
+</body>
 </html>

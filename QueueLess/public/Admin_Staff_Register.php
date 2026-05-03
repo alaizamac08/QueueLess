@@ -1,7 +1,6 @@
 <?php
 include(__DIR__ . "/../app/core/database.php");
 include(__DIR__ . "/../app/core/Logger.php");
-include(__DIR__ . "/../app/models/User.php");
 
 $db = (new Database())->connect();
 
@@ -52,7 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->execute()){
         Logger::log("REGISTER", "New staff registered: " . $username);
-        header("Location: Admin_Staff_Register.php?success=1");
+        session_start();
+
+        $_SESSION['success'] = "registered";
+        header("Location: Admin_Staff_Login.php");
         exit();
     } else {
         header("Location: Admin_Staff_Register.php?error=insert");
@@ -94,9 +96,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-<!-- FOOTER -->
+                <!-- FOOTER -->
                 <footer class="footer minimal">
                     <p>© 2026 Queueless Enrollment System | All Rights Reserved</p>
                 </footer>
+
+
+        <!-- REGISTER MODAL -->
+        <div id="registerModal" class="register-modal">
+            <div class="register-modal-content">
+                <h2 id="registerTitle"></h2>
+                <p id="registerMessage"></p>
+                <button onclick="closeRegisterModal()">OK</button>
+            </div>
+        </div>
+
+        <script>
+            function closeRegisterModal() {
+                document.getElementById("registerModal").style.display = "none";
+            }
+
+            window.onload = function () {
+                const params = new URLSearchParams(window.location.search);
+
+                if (params.has("success")) {
+                    showRegisterModal("Success", "Account created successfully!");
+
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+
+                if (params.get("error") === "taken") {
+                    showRegisterModal("Error", "Username is already taken.");
+                }
+
+                if (params.get("error") === "insert") {
+                    showRegisterModal("Error", "Failed to create account. Try again.");
+                }
+            };
+
+            function showRegisterModal(title, message) {
+                document.getElementById("registerTitle").innerText = title;
+                document.getElementById("registerMessage").innerText = message;
+                document.getElementById("registerModal").style.display = "flex";
+            }
+        </script>
 </body>
 </html>

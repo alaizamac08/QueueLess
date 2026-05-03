@@ -9,6 +9,11 @@ class Enrollment {
 
     public function createEnrollment(array $data)
     {
+
+    if ($this->studentHasEnrollment($data['student_id'])) {
+            throw new RuntimeException("Enrollment already exists.");
+        }
+
         $stmt = $this->db->prepare("
             INSERT INTO enrollments (
                 student_id,
@@ -51,6 +56,37 @@ class Enrollment {
         return $this->db->insert_id;
     }
 
+    public function studentHasEnrollment(int $studentId): bool {
+        $stmt = $this->db->prepare("
+            SELECT enrollment_id FROM enrollments WHERE student_id = ?
+        ");
+        $stmt->bind_param("i", $studentId);
+        $stmt->execute();
+        return $stmt->get_result()->num_rows > 0;
+    }
+
+    public function getByStudentId(int $studentId): ?array
+    {
+        $stmt = $this->db->prepare("
+            SELECT * FROM enrollments WHERE student_id = ? LIMIT 1
+        ");
+        $stmt->bind_param("i", $studentId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_assoc() ?: null;
+    }
+
+    public function submit(int $enrollmentId): bool
+    {
+        $stmt = $this->db->prepare("
+            UPDATE enrollments 
+            SET status = 'submitted'
+            WHERE enrollment_id = ?
+        ");
+        $stmt->bind_param("i", $enrollmentId);
+        return $stmt->execute();
+    }
+
     public function getPending() {
         return $this->db->query("
             SELECT e.enrollment_id, s.first_name, s.last_name, e.status
@@ -66,5 +102,21 @@ class Enrollment {
         ");
         $stmt->bind_param("si", $status, $id);
         return $stmt->execute();
+    }
+
+    public function getLatestByStudentId(int $studentId): ?array
+    {
+        $stmt = $this->db->prepare("
+            SELECT * 
+            FROM enrollments 
+            WHERE student_id = ?
+            ORDER BY enrollment_id DESC
+            LIMIT 1
+        ");
+
+        $stmt->bind_param("i", $studentId);
+        $stmt->execute();
+
+        return $stmt->get_result()->fetch_assoc() ?: null;
     }
 }

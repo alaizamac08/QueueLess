@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'staff') {
-    header("Location: Admin_Staff_LogIn.php");
+    header("Location: Admin_Staff_Login.php");
     exit();
 }
 ?>

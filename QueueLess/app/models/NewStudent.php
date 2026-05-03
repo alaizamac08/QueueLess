@@ -14,7 +14,7 @@ class NewStudentDetails{
             $stmt = $this->conn->prepare("INSERT INTO " . $this->table_name . " (
             enrollment_id,
             previous_school,
-            kindergarten_completed
+            elementary_completed
             ) VALUES (?, ?, ?)");
 
             $stmt->bind_param("isi", $enrollment_id, $previous_school, $kindergarten_completed);

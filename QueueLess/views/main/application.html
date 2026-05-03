@@ -151,6 +151,8 @@
                         <option value="new">New</option>
                         <option value="old">Old</option>
                         <option value="transfer">Transfer</option>
+                        <option value="stopped">Stopped</option>
+                        <option value="dropped">Dropped</option>
                     </select>
                 </div>
             </div>
@@ -167,8 +169,8 @@
                 </div>
 
                 <div class="input-group">
-                    <label>Kinder Completed</label>
-                    <select name="kindergarten_completed">
+                    <label>Elementary Completed</label>
+                    <select name="elementary_completed">
                         <option value="">Select</option>
                         <option value="1">Yes</option>
                         <option value="0">No</option>
@@ -204,41 +206,58 @@
             </div>
         </div>
 
-        <div class="form-section">
+        <!-- RETURNING -->
+        <div id="returning_section" class="form-section hidden">
+            <h2>Returning Student Details</h2>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Last Year Attended</label>
+                    <input type="text" name="last_year_attended">
+                </div>
+
+                <div class="input-group">
+                    <label>Reason</label>
+                    <input type="text" name="reason">
+                </div>
+            </div>
+        </div>
+
+        <div id="document_section" class="form-section hidden">
             <h2>Required Documents</h2>
 
             <div class="grid-2">
 
-                <div class="input-group file-group">
-                    <label>Birth Certificate<span class="asterisk">*</span></label>
+                <div class="input-group file-group" id="doc_psa">
+                    <label>Birth Certificate</label>
                     <div class="file-box">
                         <label class="file-btn">
                             Choose File
-                            <input type="file" name="birth_certificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" name="birth_certificate" accept=".pdf,.jpg,.jpeg,.png">
                         </label>
 
                         <span class="file-name">No file chosen</span>
                     </div>
                 </div>
 
-                <div class="input-group file-group">
-                    <label>Report Card (form 137/138)<span class="asterisk">*</span></label>
+                <div class="input-group file-group" id="doc_report_card">
+                    <label>Report Card (form 137/138)</label>
                     <div class="file-box">
                         <label class="file-btn">
                             Choose File
-                            <input type="file" name="birth_certificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" name="report_card" accept=".pdf,.jpg,.jpeg,.png">
                         </label>
 
                         <span class="file-name">No file chosen</span>
                     </div>
                 </div>
 
-                <div class="input-group file-group">
+                <div class="input-group file-group" id="doc_good_moral">
                     <label>Good Moral Certificate</label>
                     <div class="file-box">
                         <label class="file-btn">
                             Choose File
-                            <input type="file" name="birth_certificate" accept=".pdf,.jpg,.jpeg,.png" required>
+                            <input type="file" name="good_moral_certificate" accept=".pdf,.jpg,.jpeg,.png">
                         </label>
 
                         <span class="file-name">No file chosen</span>
@@ -256,14 +275,53 @@
 
 <script>
 const typeSelect = document.getElementById("enrollment_type");
+
 const newSection = document.getElementById("new_student_section");
 const transferSection = document.getElementById("transfer_section");
+const returningSection = document.getElementById("returning_section");
+
+const docSection = document.getElementById("document_section");
+const docPSA = document.getElementById("doc_psa");
+const docReport = document.getElementById("doc_report_card");
+const docGoodMoral = document.getElementById("doc_good_moral");
 
 typeSelect.addEventListener("change", () => {
-    newSection.classList.toggle("hidden", typeSelect.value !== "new");
-    transferSection.classList.toggle("hidden", typeSelect.value !== "transfer");
+    const value = typeSelect.value;
+
+    // ===== SECTIONS =====
+    newSection.classList.toggle("hidden", value !== "new");
+    transferSection.classList.toggle("hidden", value !== "transfer");
+
+    const isReturning = ["stopped", "dropped"].includes(value);
+    returningSection.classList.toggle("hidden", !isReturning);
+
+    // ===== DOCUMENTS RESET =====
+    docSection.classList.add("hidden");
+    docPSA.classList.add("hidden");
+    docReport.classList.add("hidden");
+    docGoodMoral.classList.add("hidden");
+
+    // ===== DOCUMENT LOGIC =====
+    if (value === "new") {
+        docSection.classList.remove("hidden");
+        docPSA.classList.remove("hidden");
+        docReport.classList.remove("hidden");
+    }
+
+    else if (value === "old") {
+        docSection.classList.remove("hidden");
+        docReport.classList.remove("hidden");
+    }
+
+    else if (["transfer", "stopped", "dropped"].includes(value)) {
+        docSection.classList.remove("hidden");
+        docPSA.classList.remove("hidden");
+        docReport.classList.remove("hidden");
+        docGoodMoral.classList.remove("hidden");
+    }
 });
 
+// file name preview
 document.querySelectorAll('input[type="file"]').forEach(input => {
     input.addEventListener('change', function () {
         const fileName = this.files[0] ? this.files[0].name : "No file chosen";

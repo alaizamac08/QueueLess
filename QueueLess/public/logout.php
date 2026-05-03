@@ -17,5 +17,5 @@ if (isset($_SESSION['user_id'])) {
 $_SESSION = [];
 session_destroy();
 
-header("Location: Admin_Staff_LogIn.php");
+header("Location: /queueless/views/main/main_page.html");
 exit();

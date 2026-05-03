@@ -1,4 +1,10 @@
 <?php
+require_once __DIR__ . '/../models/Enrollment.php';
+require_once __DIR__ . '/../models/NewStudent.php';
+require_once __DIR__ . '/../models/TransferDetails.php';
+require_once __DIR__ . '/../models/RequirementChecker.php';
+require_once __DIR__ . '/../models/Document.php';
+
 
 class EnrollmentController
 {
@@ -7,6 +13,7 @@ class EnrollmentController
     private NewStudentDetails $newStudent;
     private TransferDetails $transferStudent;
     private RequirementChecker $requirementChecker;
+    private Document $document;
 
     public function __construct(mysqli $db)
     {
@@ -15,6 +22,7 @@ class EnrollmentController
         $this->newStudent = new NewStudentDetails($db);
         $this->transferStudent = new TransferDetails($db);
         $this->requirementChecker = new RequirementChecker($db);
+        $this->document = new Document($db);
     }
 
     public function enrollStudent(array $data): int
@@ -28,6 +36,11 @@ class EnrollmentController
         $this->conn->begin_transaction();
 
         try {
+
+            if ($this->enrollment->studentHasEnrollment($data['student_id'])) {
+                throw new RuntimeException("Student already has an enrollment.");
+            }
+
             $enrollmentId = $this->enrollment->createEnrollment($data);
 
             Logger::log(
@@ -104,12 +117,12 @@ class EnrollmentController
         int $enrollmentId,
         string $status,
         int $userId
-    ): bool {
-        $stmt = $this->conn->prepare("
-            UPDATE enrollments 
-            SET status = ? 
-            WHERE enrollment_id = ?
-        ");
+        ): bool {
+            $stmt = $this->conn->prepare("
+                UPDATE enrollments 
+                SET status = ? 
+                WHERE enrollment_id = ?
+            ");
 
         $stmt->bind_param('si', $status, $enrollmentId);
         $ok = $stmt->execute();
@@ -146,5 +159,71 @@ class EnrollmentController
         $stmt->execute();
 
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getStudentDashboard(int $studentId): array
+    {
+        $enrollment = $this->enrollment->getLatestByStudentId($studentId);
+
+        if (!$enrollment) {
+            return [
+                'enrollment' => null,
+                'missing_documents' => []
+            ];
+        }
+
+        $missing = $this->document->getMissing($enrollment['enrollment_id']);
+
+        return [
+            'enrollment' => $enrollment,
+            'missing_documents' => $missing
+        ];
+    }
+
+    public function uploadDocument(int $studentId, array $file, string $type): bool
+    {
+        $enrollment = $this->enrollment->getByStudentId($studentId);
+
+        if (!$enrollment) {
+            throw new RuntimeException("No enrollment found.");
+        }
+
+        $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $filename = uniqid('doc_', true) . '.' . $ext;
+        $path = "uploads/" . $filename;
+
+        move_uploaded_file($file['tmp_name'], __DIR__ . "/../../public/" . $path);
+
+        $this->document->upload(
+            $enrollment['enrollment_id'],
+            $type,
+            $path
+        );
+
+        // 🔥 ADD THIS: refresh requirement status
+        $checker = new RequirementChecker($this->conn);
+        $status = $checker->checkCompletion($enrollment['enrollment_id']);
+
+        $stmt = $this->conn->prepare("
+            UPDATE enrollments 
+            SET status = ? 
+            WHERE enrollment_id = ?
+        ");
+
+        $stmt->bind_param("si", $status, $enrollment['enrollment_id']);
+        $stmt->execute();
+
+        return true;
+    }
+
+    public function submitEnrollment(int $studentId): bool
+    {
+        $enrollment = $this->enrollment->getByStudentId($studentId);
+
+        if (!$enrollment) {
+            throw new RuntimeException("No enrollment found.");
+        }
+
+        return $this->enrollment->submit($enrollment['enrollment_id']);
     }
 }
